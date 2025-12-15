@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Beatmap.Base;
 using UnityEngine;
@@ -35,13 +34,14 @@ namespace BPMHelper
                 return;
 
             await FindGameObjects();
+            ui.AddMenu(mapEditorUI);
         }
 
         // Places 1000bpm at the cursor
         public void AddInitialBPM()
         {
-            float currentTime = audioTimeSyncController.CurrentJsonTime;
-            BaseBpmEvent bpmEvent = new BaseBpmEvent(currentTime, 1000f);
+            Debug.Log($"Adding 1000BPM event to cursor at beat {audioTimeSyncController.CurrentJsonTime}");
+            BaseBpmEvent bpmEvent = new BaseBpmEvent(audioTimeSyncController.CurrentJsonTime, 1000f);
             bpmChangeGridContainer.SpawnObject(bpmEvent);
             bpmChangeGridContainer.RefreshModifiedBeat();
         }
@@ -50,16 +50,25 @@ namespace BPMHelper
         // Spawns error dialog box if there is no bpm event behind cursor
         public void AddFinalBPM()
         {
-            float currentTime = audioTimeSyncController.CurrentJsonTime;
-            BaseBpmEvent bpmEvent = GetClosestBehindBPMEvent(currentTime);
-            if (bpmEvent == null) {
+            Debug.Log("Updating previous BPM event");
+            float currentSeconds = audioTimeSyncController.CurrentSeconds;
+            float currentBeats = audioTimeSyncController.CurrentJsonTime;
+            Debug.Log($"CurrentSeconds:{currentSeconds} | CurrentJsonTime:{currentBeats}");
+            BaseBpmEvent bpmEvent = GetClosestBehindBPMEvent(currentBeats);
+            if (bpmEvent == null)
+            {
+                Debug.Log("No BPM events found behind cursor");
                 SpawnErrorBox("No BPM events found behind cursor");
                 return;
             }
 
-            float newBPM = 60 * numberOfBeats / (currentTime - bpmEvent.JsonTime);
-            bpmEvent.JsonTime = newBPM;
+            Debug.Log($"Previous BPM event found at beat {bpmEvent.JsonTime}");
+            float newBPM = 1000f * numberOfBeats / (currentBeats - bpmEvent.JsonTime);
+            Debug.Log($"Setting its BPM to {newBPM:N2}");
+            bpmEvent.Bpm = newBPM;
             bpmChangeGridContainer.RefreshModifiedBeat();
+            Debug.Log($"Moving cursor to {bpmEvent.JsonTime + numberOfBeats:N2}");
+            audioTimeSyncController.MoveToJsonTime(bpmEvent.JsonTime + numberOfBeats);
         }
 
         // Does AddFinalBPM and AddInitialBPM together
@@ -85,10 +94,10 @@ namespace BPMHelper
             }
         }
 
-        private BaseBpmEvent GetClosestBehindBPMEvent(float currentTime)
+        private BaseBpmEvent GetClosestBehindBPMEvent(float currentBeats)
         {
             IEnumerable<BaseBpmEvent> bpmEvents = bpmChangeGridContainer.MapObjects
-                .Where(b => b.JsonTime < currentTime).OrderBy(b => b.JsonTime).Reverse();
+                .Where(b => b.JsonTime < currentBeats).OrderBy(b => b.JsonTime).Reverse();
             if (bpmEvents.Count() == 0) return null;
             return bpmEvents.First();
         }

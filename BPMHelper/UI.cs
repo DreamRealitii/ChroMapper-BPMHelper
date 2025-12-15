@@ -12,29 +12,30 @@ namespace BPMHelper
     internal class UI
     {
         public GameObject menu;
-        private BPMHelper bpmHelper;
-        private readonly ExtensionButton extensionButton = new ExtensionButton();
+        private readonly BPMHelper bpmHelper;
 
         public UI(BPMHelper bpmHelper)
         {
             this.bpmHelper = bpmHelper;
-            ExtensionButtons.AddButton(null, "Open BPM Helper", () => menu.SetActive(!menu.activeSelf));
+            ExtensionButtons.AddButton(PersistentUI.Instance.Sprites.Background, "Open BPM Helper", () => menu.SetActive(!menu.activeSelf));
         }
 
         public void AddMenu(MapEditorUI mapEditorUI) {
             CanvasGroup parent = mapEditorUI.MainUIGroup[5];
             menu = new GameObject("BPM Helper Menu");
             menu.transform.parent = parent.transform;
-            AttachTransform(menu, 300, 140, 1, 1, 0, 0, 1, 1);
+            AttachTransform(menu, 100, 125, 1, 1, 0, 0, 1, 1);
             Image image = menu.AddComponent<Image>();
             image.sprite = PersistentUI.Instance.Sprites.Background;
             image.type = Image.Type.Sliced;
             image.color = new Color(0.24f, 0.24f, 0.24f);
 
-            AddButton(parent.transform, "Add Initial BPM", "Add Initial BPM", new Vector2(10, 10), bpmHelper.AddInitialBPM);
-            AddButton(parent.transform, "Add Middle BPM", "Add Middle BPM", new Vector2(20, 20), bpmHelper.AddMiddleBPM);
-            AddButton(parent.transform, "Add Final BPM", "Add Final BPM", new Vector2(30, 30), bpmHelper.AddFinalBPM);
-            AddTextInput(parent.transform, "Number of Beats", "Number of Beats", new Vector2(40, 40), "1", bpmHelper.UpdateNumberOfBeats);
+            AddButton(menu.transform, "Add Initial BPM", "Add Initial BPM", new Vector2(0, -25), bpmHelper.AddInitialBPM);
+            AddButton(menu.transform, "Add Middle BPM", "Add Middle BPM", new Vector2(0, -50), bpmHelper.AddMiddleBPM);
+            AddButton(menu.transform, "Add Final BPM", "Add Final BPM", new Vector2(0, -75), bpmHelper.AddFinalBPM);
+            AddTextInput(menu.transform, "Number of Beats", "Number of Beats", new Vector2(0, -100), "1", bpmHelper.UpdateNumberOfBeats);
+
+            menu.SetActive(false);
         }
 
         private void AddButton(Transform parent, string title, string text, Vector2 pos, UnityAction onClick)
@@ -56,7 +57,7 @@ namespace BPMHelper
             var rectTransform = ((RectTransform)entryLabel.transform);
             rectTransform.SetParent(parent);
 
-            MoveTransform(rectTransform, 50, 16, 0.5f, 1, pos.x - 27.5f, pos.y);
+            MoveTransform(rectTransform, 30, 16, 0.5f, 1, pos.x - 27.5f, pos.y);
             var textComponent = entryLabel.GetComponent<TextMeshProUGUI>();
 
             textComponent.name = title;
