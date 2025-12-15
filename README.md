@@ -21,6 +21,5 @@ Download BPMHelper.dll file from Releases and place it in `chromapper/Plugins` f
 - Could probably use an `Adjust BPM` button that just changes nearby existing BPM changes such that the closest one gets moved to the cursor.
 - BPM changes are not yet implemented as `Action`s, so you can't undo/redo them.
 - `Number of Beats` box lets you type anything into it and doesn't stop typing from affecting other stuff (like selecting left/right notes, bombs, and walls).
-- Code to spawn a `Dialog Box` on error does not work so it just prints to the console for now.
 - Button to open menu is just a blank sprite for now.
 - UI is fugly.
