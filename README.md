@@ -22,4 +22,5 @@ Download BPMHelper.dll file from Releases and place it in `chromapper/Plugins` f
 - BPM changes are not yet implemented as `Action`s, so you can't undo/redo them.
 - `Number of Beats` box lets you type anything into it and doesn't stop typing from affecting other stuff (like selecting left/right notes, bombs, and walls).
 - Button to open menu is just a blank sprite for now.
+- README file could use some pictures.
 - UI is fugly.
