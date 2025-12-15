@@ -47,19 +47,17 @@ namespace BPMHelper
         }
 
         // Changes the closest bpm behind the cursor to (60 * numberOfBeats / (cursor time - last bpm time))
-        // Spawns error dialog box if there is no bpm event behind cursor
-        public void AddFinalBPM()
+        // Spawns error dialog box and returns false if there is no bpm event behind cursor
+        public bool AddFinalBPM()
         {
             Debug.Log("Updating previous BPM event");
-            float currentSeconds = audioTimeSyncController.CurrentSeconds;
             float currentBeats = audioTimeSyncController.CurrentJsonTime;
-            Debug.Log($"CurrentSeconds:{currentSeconds} | CurrentJsonTime:{currentBeats}");
             BaseBpmEvent bpmEvent = GetClosestBehindBPMEvent(currentBeats);
             if (bpmEvent == null)
             {
                 Debug.Log("No BPM events found behind cursor");
                 SpawnErrorBox("No BPM events found behind cursor");
-                return;
+                return false;
             }
 
             Debug.Log($"Previous BPM event found at beat {bpmEvent.JsonTime}");
@@ -69,13 +67,14 @@ namespace BPMHelper
             bpmChangeGridContainer.RefreshModifiedBeat();
             Debug.Log($"Moving cursor to {bpmEvent.JsonTime + numberOfBeats:N2}");
             audioTimeSyncController.MoveToJsonTime(bpmEvent.JsonTime + numberOfBeats);
+            return true;
         }
 
         // Does AddFinalBPM and AddInitialBPM together
         public void AddMiddleBPM()
         {
-            AddFinalBPM();
-            AddInitialBPM();
+            if (AddFinalBPM())
+                AddInitialBPM();
         }
 
         public void UpdateNumberOfBeats(string newBeats)
@@ -104,9 +103,10 @@ namespace BPMHelper
 
         private void SpawnErrorBox(string message)
         {
-            DialogBox db = PersistentUI.Instance.CreateNewDialogBox();
+            DialogBox db = PersistentUI.Instance.CreateNewDialogBox().WithTitle("BPM Helper Error");
             TextComponent text = db.AddComponent<TextComponent>().WithInitialValue(message);
             db.AddFooterButton(() => {}, "Close");
+            db.Open();
         }
 
         [Exit]

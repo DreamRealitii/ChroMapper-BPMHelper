@@ -32,7 +32,7 @@ namespace BPMHelper
 
             AddButton(menu.transform, "Add Initial BPM", "Add Initial BPM", new Vector2(0, -25), bpmHelper.AddInitialBPM);
             AddButton(menu.transform, "Add Middle BPM", "Add Middle BPM", new Vector2(0, -50), bpmHelper.AddMiddleBPM);
-            AddButton(menu.transform, "Add Final BPM", "Add Final BPM", new Vector2(0, -75), bpmHelper.AddFinalBPM);
+            AddButton(menu.transform, "Add Final BPM", "Add Final BPM", new Vector2(0, -75), () => bpmHelper.AddFinalBPM());
             AddTextInput(menu.transform, "Number of Beats", "Number of Beats", new Vector2(0, -100), "1", bpmHelper.UpdateNumberOfBeats);
 
             menu.SetActive(false);
