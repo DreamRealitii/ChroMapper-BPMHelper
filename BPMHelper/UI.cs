@@ -24,7 +24,7 @@ namespace BPMHelper
             CanvasGroup parent = mapEditorUI.MainUIGroup[5];
             menu = new GameObject("BPM Helper Menu");
             menu.transform.parent = parent.transform;
-            AttachTransform(menu, 100, 125, 1, 1, 0, 0, 1, 1);
+            AttachTransform(menu, 125, 150, 1, 1, 0, 0, 1, 1);
             Image image = menu.AddComponent<Image>();
             image.sprite = PersistentUI.Instance.Sprites.Background;
             image.type = Image.Type.Sliced;
@@ -33,7 +33,8 @@ namespace BPMHelper
             AddButton(menu.transform, "Add Initial BPM", "Add Initial BPM", new Vector2(0, -25), bpmHelper.AddInitialBPM);
             AddButton(menu.transform, "Add Middle BPM", "Add Middle BPM", new Vector2(0, -50), bpmHelper.AddMiddleBPM);
             AddButton(menu.transform, "Add Final BPM", "Add Final BPM", new Vector2(0, -75), () => bpmHelper.AddFinalBPM());
-            AddTextInput(menu.transform, "Number of Beats", "Number of Beats", new Vector2(0, -100), "1", bpmHelper.UpdateNumberOfBeats);
+            AddButton(menu.transform, "Adjust BPM", "Adjust BPM", new Vector2(0, -100), () => bpmHelper.AdjustBPM());
+            AddTextInput(menu.transform, "Number of Beats", "Number of Beats", new Vector2(0, -125), "4", bpmHelper.UpdateNumberOfBeats);
 
             menu.SetActive(false);
         }
