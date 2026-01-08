@@ -18,8 +18,10 @@ Download BPMHelper.dll file from Releases and place it in `chromapper/Plugins` f
 4. Once you reach the end of the song, enter the number of beats one more time and press `Add Final BPM`. This does the same thing as `Add Middle BPM` but without placing a temporary BPM change at the cursor.
 5. Go to Settings -> Audio -> Volume, turn on the Metronome, and listen to the song to see if it sounds right.
 # In what ways is it not finished yet?
+- Currently bugged and only opens for the first map you load.
 - Could probably use an `Adjust BPM` button that just changes nearby existing BPM changes such that the closest one gets moved to the cursor.
 - BPM changes are not yet implemented as `Action`s, so you can't undo/redo them.
 - `Number of Beats` box lets you type anything into it and doesn't stop typing from affecting other stuff (like selecting left/right notes, bombs, and walls).
 - Button to open menu is just a blank sprite for now.
+- README file could use some pictures.
 - UI is fugly.
