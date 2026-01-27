@@ -5,7 +5,7 @@ Download BPMHelper.dll file from Releases and place it in `chromapper/Plugins` f
 # Anything I should do before using it?
 - If you are mapping a song from a rhythm game, check the internet to see if there is official BPM info that you can use instead.
 - There's no need to make the audio line up with the song's initial BPM if you don't want to, but if you want your map to be rankable on either leaderboard, make sure the audio you are mapping to has at least 1.5 seconds before where you plan on placing the first note, and 2.0 seconds after the last note. Use Audacity to add silence if needed.
-- The map's global BPM value can be set either before or after you use BPM Helper place BPM changes in the map.
+- The map's global BPM value can be set either before or after you use BPM Helper to place BPM changes in the map.
 - Go to Settings -> Graphics -> Spectrogram settings and set `Sample Size` to 256, `Sample Quality` to 8, and `Logarithmic Shift` to at least 2. This will make the audio graph at the side easier to look at.
 # How do I open it?
 1. Open a map in ChroMapper.
