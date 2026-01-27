@@ -17,9 +17,8 @@ Download BPMHelper.dll file from Releases and place it in `chromapper/Plugins` f
 3. If your song has an entirely consistent BPM, go to Step 4. If your song has a specific BPM change at a specific moment in time, move the cursor there, enter the number of beats between them, and press `Add Middle BPM` again. If your song has no consistent BPM, pick a small `Number of Beats` value and press `Add Middle BPM` for each set of beats.
 4. Once you reach the end of the song, enter the number of beats one more time and press `Add Final BPM`. This does the same thing as `Add Middle BPM` but without placing a temporary BPM change at the cursor.
 5. Go to Settings -> Audio -> Volume, turn on the Metronome, and listen to the song to see if it sounds right.
+6. If something sounds off, move the cursor to the correct spot and click `Adjust BPM` to move the nearest BPM change there.
 # In what ways is it not finished yet?
-- Currently bugged and only opens for the first map you load.
-- Could probably use an `Adjust BPM` button that just changes nearby existing BPM changes such that the closest one gets moved to the cursor.
 - BPM changes are not yet implemented as `Action`s, so you can't undo/redo them.
 - `Number of Beats` box lets you type anything into it and doesn't stop typing from affecting other stuff (like selecting left/right notes, bombs, and walls).
 - Button to open menu is just a blank sprite for now.
